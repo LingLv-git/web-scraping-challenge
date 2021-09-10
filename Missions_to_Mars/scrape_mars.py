@@ -11,7 +11,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 def scrape_mars():
     
-    # ### NASA Mars News
+    #  Mars News
 
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=False)
@@ -27,7 +27,7 @@ def scrape_mars():
     print(f'The paragrah of the latest new is: {latest_p}.')
 
 
-    # ### JPL Mars Space Images - Featured Image
+    # Mars Space Images - Featured Image
 
     url_image = 'https://spaceimages-mars.com'
     browser.visit(url_image)
@@ -39,7 +39,7 @@ def scrape_mars():
     featured_image_url
 
 
-    # ### Mars Facts
+    # Mars Facts
 
     mars_facts_url = 'https://galaxyfacts-mars.com'
     mars_facts = pd.read_html(mars_facts_url)[1]
@@ -50,10 +50,9 @@ def scrape_mars():
     mars_facts
 
     mars_fact_html = mars_facts.to_html('mars_fact.html')
-    get_ipython().system('open mars_fact.html')
 
 
-    # ### Mars hemispheres
+    #  Mars hemispheres
 
     mars_hemisphere_url = 'https://marshemispheres.com'
     browser.visit(mars_hemisphere_url)
@@ -72,13 +71,13 @@ def scrape_mars():
         image_soup = BeautifulSoup(image_html, 'html.parser')
         image_url = image_soup.find('div', class_='wide-image-wrapper').img['src']
         full_image_url = f'{mars_hemisphere_url}/{image_url}'
-        d = {'title': image_title, 'img_url': image_url, 'img_descrption': image_description}
+        d = {'title': image_title, 'img_url': full_image_url, 'img_descrption': image_description}
         hemisphere_image_url.append(d)
         
     mars = {
         'latest_news': latest_news,
         'latest_paragraph': latest_p,
-        'feature_image_url': feature_image_url,
+        'feature_image_url': featured_image_url,
         'mars_facts': mars_fact_html,
         'hemisphere_images': hemisphere_image_url
     
@@ -89,6 +88,6 @@ def scrape_mars():
 
     
 
-
+# print(scrape_mars())
 
 
